@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
 
-class ViewRiderScreen extends StatelessWidget {
+class ViewRiderScreen extends StatefulWidget {
   static const routeName = '/view-rider-screen';
   final String riderName;
   final String phoneNumber;
   final String address;
   final String locality;
+  final String aadharFile;
+  final String dlFile;
+  final String panFile;
+  final String bankChequeFile;
+  final String photoFile;
   const ViewRiderScreen({
     Key? key,
     required this.riderName,
     required this.phoneNumber,
     required this.address,
     required this.locality,
+    required this.aadharFile,
+    required this.dlFile,
+    required this.panFile,
+    required this.bankChequeFile,
+    required this.photoFile,
   }) : super(key: key);
 
+  static ValueNotifier<int> currentIndexValue = ValueNotifier(0);
+
+  @override
+  State<ViewRiderScreen> createState() => _ViewRiderScreenState();
+}
+
+class _ViewRiderScreenState extends State<ViewRiderScreen> {
   @override
   Widget build(BuildContext context) {
+    final List<String> images = [
+      widget.aadharFile,
+      widget.dlFile,
+      widget.panFile,
+      widget.bankChequeFile,
+      widget.photoFile
+    ];
+
+    int currentIndex = 0;
+    // print(bankChequeFile.toString());
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -30,35 +58,191 @@ class ViewRiderScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 30,
+              ),
+              // below container will be scrollable left to right
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: PageView.builder(onPageChanged: (index) {
+                  setState(() {
+                    ViewRiderScreen.currentIndexValue.value =
+                        index % images.length;
+                  });
+                }, itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      height: 200,
+                      width: double.infinity,
+                      child: Image.network(
+                        images[index % images.length],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                child: Center(
+                    child: buildIndicator(
+                        ViewRiderScreen.currentIndexValue.value)),
+              ),
               const SizedBox(
                 height: 60,
               ),
-              Text(
-                riderName,
-                style: const TextStyle(fontSize: 15, color: Colors.blue),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 70,
+                    width: double.maxFinite,
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            'Name',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.riderName,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: double.maxFinite,
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            'Phone Number',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.phoneNumber,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: double.maxFinite,
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            'Locality',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.locality,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 70,
+                    width: double.maxFinite,
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            'Address',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.address,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                address,
-                style: const TextStyle(fontSize: 15, color: Colors.blue),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                phoneNumber,
-                style: const TextStyle(fontSize: 15, color: Colors.blue),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                locality,
-                style: const TextStyle(fontSize: 15, color: Colors.blue),
-              ),
+
               const SizedBox(
                 height: 15,
               )
@@ -67,5 +251,32 @@ class ViewRiderScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildIndicator(int index) {
+    return index == 0
+        ? const Text(
+            'Aadhar',
+            style: TextStyle(color: Colors.black),
+          )
+        : index == 1
+            ? const Text(
+                'DL',
+                style: TextStyle(color: Colors.black),
+              )
+            : index == 2
+                ? const Text(
+                    'PAN',
+                    style: TextStyle(color: Colors.black),
+                  )
+                : index == 3
+                    ? const Text(
+                        'Bank Cheque',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    : const Text(
+                        'Photo',
+                        style: TextStyle(color: Colors.black),
+                      );
   }
 }

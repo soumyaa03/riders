@@ -37,12 +37,22 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final phoneNumber = arguments['phoneNumber'];
       final locality = arguments['locality'];
       final riderName = arguments['riderName'];
+      final aadharFile = arguments['aadharFile'];
+      final dlFile = arguments['dlFile'];
+      final panFile = arguments['panFile'];
+      final bankChequeFile = arguments['bankChequeFile'];
+      final photoFile = arguments['photoFile'];
       return MaterialPageRoute(
           builder: (context) => ViewRiderScreen(
                 address: address,
                 locality: locality,
                 phoneNumber: phoneNumber,
                 riderName: riderName,
+                aadharFile: aadharFile,
+                dlFile: dlFile,
+                panFile: panFile,
+                bankChequeFile: bankChequeFile,
+                photoFile: photoFile,
               ));
 
     default:

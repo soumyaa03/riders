@@ -64,6 +64,14 @@ class HomeScreen extends ConsumerWidget {
                                           snapshot.data![index].phoneNumber,
                                       'locality':
                                           snapshot.data![index].localities,
+                                      'aadharFile':
+                                          snapshot.data![index].aadharUrl,
+                                      'dlFile': snapshot.data![index].dlUrl,
+                                      'panFile': snapshot.data![index].panUrl,
+                                      'bankChequeFile':
+                                          snapshot.data![index].bankChequeUrl,
+                                      'photoFile':
+                                          snapshot.data![index].photoUrl,
                                     },
                                   );
                                 },
