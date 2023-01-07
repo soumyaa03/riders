@@ -31,8 +31,9 @@ class HomeScreen extends ConsumerWidget {
           children: [
             Expanded(
                 child: StreamBuilder<List<RiderModel>>(
-              stream:
-                  ref.watch(postControllerProvider).getRiderDataFromFireBase(),
+              stream: ref
+                  .watch(postControllerProvider)
+                  .getUnapprovedRiderDataFromFireBase(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -46,12 +47,51 @@ class HomeScreen extends ConsumerWidget {
                               onDismissed: (DismissDirection direction) async {
                                 if (direction == DismissDirection.startToEnd) {
                                   //APPROVE RIDER
+
+                                  RiderModel approvedRider = RiderModel(
+                                    riderName: snapshot.data![index].riderName,
+                                    uid: snapshot.data![index].riderName,
+                                    phoneNumber:
+                                        snapshot.data![index].phoneNumber,
+                                    localities:
+                                        snapshot.data![index].localities,
+                                    currentAddress:
+                                        snapshot.data![index].currentAddress,
+                                    pincode: snapshot.data![index].pincode,
+                                    bankAccountNumber:
+                                        snapshot.data![index].bankAccountNumber,
+                                    ifscNumber:
+                                        snapshot.data![index].ifscNumber,
+                                    photoUrl: snapshot.data![index].photoUrl,
+                                    dlUrl: snapshot.data![index].dlUrl,
+                                    panUrl: snapshot.data![index].panUrl,
+                                    bankChequeUrl:
+                                        snapshot.data![index].bankChequeUrl,
+                                    aadharUrl: snapshot.data![index].aadharUrl,
+                                  );
+
+                                  ref
+                                      .read(postControllerProvider)
+                                      .saveApprovedRiderDataToFireBase(
+                                          approvedRider);
                                 } else {
                                   //REJECT RIDER
+
                                 }
                               },
                               child: InkWell(
                                 onTap: () {
+                                  // var url =
+                                  //     'https://firebasestorage.googleapis.com/v0/b/riders-4f8dd.appspot.com/o/aadharDocuments%2Fphotos%2Fdata%2Fuser%2F0%2Fcom.example.riders%2Fcache%2Fimage_picker2400482709162048794.jpg?alt=media&token=49533b9e-4fe2-4a6d-bc9c-2d711d710207';
+                                  // if (url ==
+                                  //     snapshot.data![index].bankChequeUrl) {
+                                  //   log('bank url working');
+                                  // } else {
+                                  //   log('not working');
+                                  // }
+                                  // log(snapshot.data![index].bankChequeUrl);
+                                  // log('');
+                                  // log('next');
                                   Navigator.pushNamed(
                                     context,
                                     ViewRiderScreen.routeName,
