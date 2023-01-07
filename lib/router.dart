@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riders/screens/add_rider.dart';
 import 'package:riders/screens/hone_screen.dart';
 import 'package:riders/screens/upload_doc.dart';
+import 'package:riders/screens/view_document.dart';
 import 'package:riders/screens/view_rider_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,6 +31,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case HomeScreen.routeName:
       return MaterialPageRoute(builder: (context) => const HomeScreen());
+
+    case ViewDocument.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final image = arguments['image'];
+      return MaterialPageRoute(
+          builder: (context) => ViewDocument(
+                image: image,
+              ));
 
     case ViewRiderScreen.routeName:
       final arguments = settings.arguments as Map<String, dynamic>;

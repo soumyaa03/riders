@@ -1,42 +1,63 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riders/common/repository/documents_storage_repository.dart';
 import 'package:riders/common/utils/utils.dart';
-import 'package:riders/screens/upload_doc.dart';
+import 'package:riders/screens/view_document.dart';
 
-class UploadDocumentWidget extends StatefulWidget {
+class UploadDocumentWidget extends ConsumerStatefulWidget {
   static File? image;
   final String fileType;
   const UploadDocumentWidget({super.key, required this.fileType});
 
   @override
-  State<UploadDocumentWidget> createState() => _UploadDocumentWidgetState();
+  ConsumerState<UploadDocumentWidget> createState() =>
+      _UploadDocumentWidgetState();
 }
 
-class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
+class _UploadDocumentWidgetState extends ConsumerState<UploadDocumentWidget> {
+  File? viewImage;
   @override
   void initState() {
-    UploadDocumentWidget.image = null;
     super.initState();
+    UploadDocumentWidget.image = null;
   }
 
   void selectImage() async {
     UploadDocumentWidget.image = await pickImageFromGallery(context);
+    viewImage = UploadDocumentWidget.image;
     switch (widget.fileType) {
       case "aadhar":
-        UploadDoc.aadharValue.value = UploadDocumentWidget.image;
+        ref
+            .read(documentStorageRepositoryProvider)
+            .getDocument(UploadDocumentWidget.image, widget.fileType);
+        // UploadDoc.aadharValue.value = UploadDocumentWidget.image;
+
         break;
       case "dl":
-        UploadDoc.dlValue.value = UploadDocumentWidget.image;
+        ref
+            .read(documentStorageRepositoryProvider)
+            .getDocument(UploadDocumentWidget.image, widget.fileType);
+
         break;
       case "pan":
-        UploadDoc.panValue.value = UploadDocumentWidget.image;
+        ref
+            .read(documentStorageRepositoryProvider)
+            .getDocument(UploadDocumentWidget.image, widget.fileType);
+
         break;
       case "bankCheque":
-        UploadDoc.bankChequeValue.value = UploadDocumentWidget.image;
+        ref
+            .read(documentStorageRepositoryProvider)
+            .getDocument(UploadDocumentWidget.image, widget.fileType);
+
         break;
       case "photo":
-        UploadDoc.photoValue.value = UploadDocumentWidget.image;
+        ref
+            .read(documentStorageRepositoryProvider)
+            .getDocument(UploadDocumentWidget.image, widget.fileType);
+
         break;
 
       default:
@@ -57,14 +78,22 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          UploadDocumentWidget.image == null
-              ? const Icon(Icons.done)
-              : const Icon(
-                  Icons.done_all,
-                  color: Colors.blue,
-                ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: viewImage == null
+                ? const Icon(Icons.done)
+                : const Icon(
+                    Icons.done_all,
+                    color: Colors.blue,
+                  ),
+          ),
           const SizedBox(width: 10),
-          Text(widget.fileType),
+          SizedBox(
+            width: 90,
+            child: Text(
+              widget.fileType,
+            ),
+          ),
           const SizedBox(width: 45),
           GestureDetector(
             onTap: () {
@@ -72,12 +101,32 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
             },
             child: Container(
               height: MediaQuery.of(context).size.height / 20,
-              width: 150,
+              width: 80,
               decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.black),
                 shape: BoxShape.rectangle,
               ),
               child: const Center(child: Text('Upload')),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (viewImage != null) {
+                Navigator.pushNamed(context, ViewDocument.routeName,
+                    arguments: {'image': viewImage});
+              } else {
+                showSnackBar(
+                    context: context, content: 'Upload the Document first');
+              }
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height / 20,
+              width: 80,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.black),
+                shape: BoxShape.rectangle,
+              ),
+              child: const Center(child: Text('View')),
             ),
           )
         ],

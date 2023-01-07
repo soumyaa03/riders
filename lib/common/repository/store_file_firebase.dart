@@ -13,8 +13,10 @@ class CommonFirebaseStorageRepository {
 
   CommonFirebaseStorageRepository({required this.firebaseStorage});
 
-  Future<String> storeFileToFireBase(String ref, File file) async {
-    UploadTask uploadTask = firebaseStorage.ref().child(ref).putFile(file);
+  Future<String> storeFileToFireBase(
+      String ref, String fileName, File file) async {
+    UploadTask uploadTask =
+        firebaseStorage.ref().child(ref).child(fileName).putFile(file);
     TaskSnapshot snap = await uploadTask;
     String downlaodUrl = await snap.ref.getDownloadURL();
     return downlaodUrl;

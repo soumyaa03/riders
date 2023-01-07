@@ -31,29 +31,48 @@ class PostRiderRepository {
     required File? pan,
     required File? bankCheque,
     required File? photo,
+    required bool isApproved,
   }) async {
     try {
-      String uid = riderName;
-
+      // String uid = riderName;
+      // if (aadhar != null) {
+      //   log(aadhar.path.toString());
+      // }
+      // if (pan != null) {
+      //   log(pan.path.toString());
+      // }
+      // if (dl != null) {
+      //   log(dl.path.toString());
+      // }
+      // if (bankCheque != null) {
+      //   log(bankCheque.path.toString());
+      // }
+      // if (photo != null) {
+      //   log(photo.path.toString());
+      // }
       String photoUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
-          .storeFileToFireBase('photoDocuments/', photo!);
+          .storeFileToFireBase(
+              'photoDocuments/photos', photo!.path.toString(), photo);
       String bankChequeUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
-          .storeFileToFireBase('photoDocuments/', bankCheque!);
+          .storeFileToFireBase('bankChequeDocuments/photos',
+              bankCheque!.path.toString(), bankCheque);
       String panUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
-          .storeFileToFireBase('photoDocuments/', pan!);
+          .storeFileToFireBase(
+              'panDocuments/photos', pan!.path.toString(), pan);
       String dlUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
-          .storeFileToFireBase('photoDocuments/', dl!);
+          .storeFileToFireBase('dlDocuments/photos', dl!.path.toString(), dl);
       String aadharUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
-          .storeFileToFireBase('photoDocuments/', aadhar!);
+          .storeFileToFireBase(
+              'aadharDocuments/photos', aadhar!.path.toString(), aadhar);
 
       var rider = RiderModel(
         riderName: riderName,
-        uid: uid,
+        uid: riderName,
         phoneNumber: phoneNumber,
         localities: locality,
         currentAddress: currentAddress,
@@ -67,14 +86,29 @@ class PostRiderRepository {
         aadharUrl: aadharUrl,
       );
 
-      await FirebaseFirestore.instance.collection('riders').add(rider.toMap());
+      await FirebaseFirestore.instance
+          .collection('UnapprovedRiders')
+          .add(rider.toMap());
     } catch (e) {
       log(e.toString());
     }
   }
 
-  Stream<List<RiderModel>> getRiderDataFromFireBase() {
-    return firestore.collection('riders').snapshots().asyncMap((event) async {
+  saveApprovedRiderDataToFireBase({required RiderModel approvedRider}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('ApprovedRiders')
+          .add(approvedRider.toMap());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Stream<List<RiderModel>> getUnapprovedRiderDataFromFireBase() {
+    return firestore
+        .collection('UnapprovedRiders')
+        .snapshots()
+        .asyncMap((event) async {
       List<RiderModel> riders = [];
       for (var document in event.docs) {
         var riderData = RiderModel.fromMap(document.data());
@@ -93,6 +127,35 @@ class PostRiderRepository {
             bankChequeUrl: riderData.bankChequeUrl,
             aadharUrl: riderData.aadharUrl));
       }
+
+      return riders;
+    });
+  }
+
+  Stream<List<RiderModel>> getApprovedRiderDataFromFireBase() {
+    return firestore
+        .collection('ApprovedRiders')
+        .snapshots()
+        .asyncMap((event) async {
+      List<RiderModel> riders = [];
+      for (var document in event.docs) {
+        var riderData = RiderModel.fromMap(document.data());
+        riders.add(RiderModel(
+            riderName: riderData.riderName,
+            uid: riderData.uid,
+            phoneNumber: riderData.phoneNumber,
+            localities: riderData.localities,
+            currentAddress: riderData.currentAddress,
+            pincode: riderData.pincode,
+            bankAccountNumber: riderData.bankAccountNumber,
+            ifscNumber: riderData.ifscNumber,
+            photoUrl: riderData.photoUrl,
+            dlUrl: riderData.dlUrl,
+            panUrl: riderData.panUrl,
+            bankChequeUrl: riderData.bankChequeUrl,
+            aadharUrl: riderData.aadharUrl));
+      }
+
       return riders;
     });
   }

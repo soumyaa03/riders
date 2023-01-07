@@ -61,7 +61,7 @@ class RiderModel {
       dlUrl: map['dlUrl'] ?? '',
       panUrl: map['panUrl'] ?? '',
       aadharUrl: map['aadharUrl'] ?? '',
-      bankChequeUrl: map['bankCheque'] ?? '',
+      bankChequeUrl: map['bankChequeUrl'] ?? '',
     );
   }
 }

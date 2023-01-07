@@ -17,38 +17,49 @@ class PostRiderController {
   PostRiderController({required this.postRiderRepository, required this.ref});
 
   void saveRiderDataToFirebase(
-    BuildContext context,
-    String riderName,
-    String phoneNumber,
-    String locality,
-    String currentAddress,
-    String currentPincode,
-    String accNumber,
-    String ifscNumber,
-    File? aadhar,
-    File? dl,
-    File? pan,
-    File? bankCheque,
-    File? photo,
-  ) {
+      BuildContext context,
+      String riderName,
+      String phoneNumber,
+      String locality,
+      String currentAddress,
+      String currentPincode,
+      String accNumber,
+      String ifscNumber,
+      File? aadhar,
+      File? dl,
+      File? pan,
+      File? bankCheque,
+      File? photo,
+      bool isApproved) {
     postRiderRepository.saveRiderDataToFireBase(
-        riderName: riderName,
-        phoneNumber: phoneNumber,
-        locality: locality,
-        currentAddress: currentAddress,
-        currentPincode: currentPincode,
-        accNumber: accNumber,
-        ifscNumber: ifscNumber,
-        aadhar: aadhar,
-        dl: dl,
-        pan: pan,
-        bankCheque: bankCheque,
-        photo: photo,
-        ref: ref,
-        context: context);
+      riderName: riderName,
+      phoneNumber: phoneNumber,
+      locality: locality,
+      currentAddress: currentAddress,
+      currentPincode: currentPincode,
+      accNumber: accNumber,
+      ifscNumber: ifscNumber,
+      aadhar: aadhar,
+      dl: dl,
+      pan: pan,
+      bankCheque: bankCheque,
+      photo: photo,
+      ref: ref,
+      context: context,
+      isApproved: isApproved,
+    );
   }
 
-  Stream<List<RiderModel>> getRiderDataFromFireBase() {
-    return postRiderRepository.getRiderDataFromFireBase();
+  saveApprovedRiderDataToFireBase(RiderModel approvedRider) {
+    postRiderRepository.saveApprovedRiderDataToFireBase(
+        approvedRider: approvedRider);
+  }
+
+  Stream<List<RiderModel>> getUnapprovedRiderDataFromFireBase() {
+    return postRiderRepository.getUnapprovedRiderDataFromFireBase();
+  }
+
+  Stream<List<RiderModel>> getApprovedRiderDataFromFireBase() {
+    return postRiderRepository.getApprovedRiderDataFromFireBase();
   }
 }

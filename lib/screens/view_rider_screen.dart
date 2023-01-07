@@ -90,6 +90,14 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           });
                         },
                         itemBuilder: (context, index) {
+                          // var url =
+                          //     'https://firebasestorage.googleapis.com/v0/b/riders-4f8dd.appspot.com/o/aadharDocuments%2Fphotos%2Fdata%2Fuser%2F0%2Fcom.example.riders%2Fcache%2Fimage_picker2400482709162048794.jpg?alt=media&token=49533b9e-4fe2-4a6d-bc9c-2d711d710207';
+                          // if (url == images[0]) {
+                          //   log('bank url working');
+                          // } else {
+                          //   log('not working');
+                          // }
+
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: SizedBox(
@@ -137,21 +145,21 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           child: Text(
                             'Name',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 50,
+                          width: 25,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             widget.riderName,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -173,21 +181,21 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           child: Text(
                             'Phone Number',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 50,
+                          width: 25,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             widget.phoneNumber,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -209,21 +217,21 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           child: Text(
                             'Locality',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 50,
+                          width: 25,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             widget.locality,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -245,24 +253,21 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           child: Text(
                             'Address',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 50,
+                          width: 25,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            widget.address,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                        Text(
+                          widget.address,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ],

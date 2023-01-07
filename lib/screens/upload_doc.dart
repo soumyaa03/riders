@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riders/common/repository/documents_storage_repository.dart';
 import 'package:riders/common/utils/utils.dart';
 import 'package:riders/features/post_riders/post_rider_controller.dart';
 import 'package:riders/screens/hone_screen.dart';
@@ -27,18 +29,13 @@ class UploadDoc extends ConsumerStatefulWidget {
     required this.ifscNumber,
   }) : super(key: key);
 
-  static ValueNotifier<File?> aadharValue = ValueNotifier(null);
-  static ValueNotifier<File?> dlValue = ValueNotifier(null);
-  static ValueNotifier<File?> panValue = ValueNotifier(null);
-  static ValueNotifier<File?> bankChequeValue = ValueNotifier(null);
-  static ValueNotifier<File?> photoValue = ValueNotifier(null);
-
   @override
   ConsumerState<UploadDoc> createState() => _UploadDocState();
 }
 
 class _UploadDocState extends ConsumerState<UploadDoc> {
-  Future storeUserData() async {
+  Future storeUserData(
+      File? aadhar, File? pan, File? dl, File? bankCheque, File? photo) async {
     String riderName = widget.riderName;
     String phoneNumber = widget.phoneNumber;
     String locality = widget.locality;
@@ -46,11 +43,21 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
     String currentPincode = widget.currentPincode;
     String accNumber = widget.accNumber;
     String ifscNumber = widget.ifscNumber;
-    File? aadhar = UploadDoc.aadharValue.value;
-    File? pan = UploadDoc.panValue.value;
-    File? bankCheque = UploadDoc.bankChequeValue.value;
-    File? dl = UploadDoc.dlValue.value;
-    File? photo = UploadDoc.photoValue.value;
+    if (aadhar != null) {
+      log(aadhar.path.toString());
+    }
+    if (pan != null) {
+      log(pan.path.toString());
+    }
+    if (dl != null) {
+      log(dl.path.toString());
+    }
+    if (bankCheque != null) {
+      log(bankCheque.path.toString());
+    }
+    if (photo != null) {
+      log(photo.path.toString());
+    }
 
     ref.read(postControllerProvider).saveRiderDataToFirebase(
           context,
@@ -66,23 +73,25 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
           pan,
           bankCheque,
           photo,
+          false,
         );
   }
 
-  bool dataValidation() {
-    if (UploadDoc.aadharValue.value == null) {
+  bool dataValidation(
+      File? aadhar, File? pan, File? dl, File? bankCheque, File? photo) {
+    if (aadhar == null) {
       showSnackBar(context: context, content: 'Uplaod Aadhar Card');
       return false;
-    } else if (UploadDoc.bankChequeValue.value == null) {
+    } else if (bankCheque == null) {
       showSnackBar(context: context, content: 'Uplaod bank cheque');
       return false;
-    } else if (UploadDoc.dlValue.value == null) {
+    } else if (dl == null) {
       showSnackBar(context: context, content: 'Uplaod DL');
       return false;
-    } else if (UploadDoc.panValue.value == null) {
+    } else if (pan == null) {
       showSnackBar(context: context, content: 'Uplaod PAN card');
       return false;
-    } else if (UploadDoc.photoValue.value == null) {
+    } else if (photo == null) {
       showSnackBar(context: context, content: 'Uplaod Photo');
       return false;
     } else {
@@ -92,14 +101,8 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
 
   @override
   Widget build(BuildContext context) {
-    // File? aadhar;
-    // File? dl;
-    // File? pan;
-    // File? bankCheque;
-    // File? photo;
-    // List<File> doclList;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
@@ -127,12 +130,46 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
               ),
               const UploadDocumentWidget(fileType: 'bankCheque'),
               const SizedBox(
-                height: 30,
+                height: 15,
               ),
               GestureDetector(
                 onTap: () async {
-                  if (dataValidation()) {
-                    await storeUserData();
+                  File? aadhar =
+                      ref.watch(documentStorageRepositoryProvider).aadhar;
+                  if (aadhar != null) {
+                    log(aadhar.path.toString());
+                  } else {
+                    log('aadhar is empty');
+                  }
+                  File? pan = ref.watch(documentStorageRepositoryProvider).pan;
+                  if (pan != null) {
+                    log(pan.path.toString());
+                  } else {
+                    log('pan is empty');
+                  }
+                  File? dl = ref.watch(documentStorageRepositoryProvider).dl;
+                  if (dl != null) {
+                    log(dl.path.toString());
+                  } else {
+                    log('dl is empty');
+                  }
+                  File? bankCheque =
+                      ref.watch(documentStorageRepositoryProvider).bankCheque;
+                  if (bankCheque != null) {
+                    log(bankCheque.path.toString());
+                  } else {
+                    log('bankCheque is empty');
+                  }
+                  File? photo =
+                      ref.watch(documentStorageRepositoryProvider).photo;
+                  if (photo != null) {
+                    log(photo.path.toString());
+                  } else {
+                    log('photo is empty');
+                  }
+
+                  if (dataValidation(aadhar, pan, dl, bankCheque, photo)) {
+                    await storeUserData(aadhar, pan, dl, bankCheque, photo);
                     Navigator.pushNamed(context, HomeScreen.routeName);
                   }
                 },
