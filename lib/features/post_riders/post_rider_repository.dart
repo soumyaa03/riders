@@ -70,9 +70,13 @@ class PostRiderRepository {
           .storeFileToFireBase(
               'aadharDocuments/photos', aadhar!.path.toString(), aadhar);
 
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection('UnapprovedRiders').doc();
+      String uid = docRef.id;
+
       var rider = RiderModel(
         riderName: riderName,
-        uid: riderName,
+        uid: uid,
         phoneNumber: phoneNumber,
         localities: locality,
         currentAddress: currentAddress,
@@ -85,10 +89,7 @@ class PostRiderRepository {
         bankChequeUrl: bankChequeUrl,
         aadharUrl: aadharUrl,
       );
-
-      await FirebaseFirestore.instance
-          .collection('UnapprovedRiders')
-          .add(rider.toMap());
+      docRef.set(rider.toMap());
     } catch (e) {
       log(e.toString());
     }
@@ -98,7 +99,8 @@ class PostRiderRepository {
     try {
       await FirebaseFirestore.instance
           .collection('ApprovedRiders')
-          .add(approvedRider.toMap());
+          .doc(approvedRider.uid)
+          .set(approvedRider.toMap());
     } catch (e) {
       log(e.toString());
     }

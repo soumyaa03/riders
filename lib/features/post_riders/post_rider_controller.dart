@@ -51,7 +51,7 @@ class PostRiderController {
   }
 
   saveApprovedRiderDataToFireBase(RiderModel approvedRider) {
-    postRiderRepository.saveApprovedRiderDataToFireBase(
+    return postRiderRepository.saveApprovedRiderDataToFireBase(
         approvedRider: approvedRider);
   }
 
