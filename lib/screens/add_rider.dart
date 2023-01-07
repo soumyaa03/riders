@@ -111,7 +111,10 @@ class _AddRiderState extends ConsumerState<AddRider> {
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   TextFieldWidget(
-                      textController: phoneController, hintText: 'enter'),
+                    textController: phoneController,
+                    hintText: 'enter',
+                    keyBoardType: 1,
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     "Locality",
@@ -133,23 +136,30 @@ class _AddRiderState extends ConsumerState<AddRider> {
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   TextFieldWidget(
-                      textController: currentPincodeController,
-                      hintText: 'enter'),
+                    textController: currentPincodeController,
+                    hintText: 'enter',
+                    keyBoardType: 1,
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     "Account Number",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   TextFieldWidget(
-                      textController: banckAccountNumberController,
-                      hintText: 'enter'),
+                    textController: banckAccountNumberController,
+                    hintText: 'enter',
+                    keyBoardType: 1,
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     "IFSC number",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   TextFieldWidget(
-                      textController: ifscController, hintText: 'enter'),
+                    textController: ifscController,
+                    hintText: 'enter',
+                    keyBoardType: 1,
+                  ),
                   const SizedBox(height: 50),
                   InkWell(
                     onTap: (() {

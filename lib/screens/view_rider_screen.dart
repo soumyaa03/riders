@@ -31,6 +31,7 @@ class ViewRiderScreen extends StatefulWidget {
 }
 
 class _ViewRiderScreenState extends State<ViewRiderScreen> {
+  final PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
     final List<String> images = [
@@ -41,7 +42,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
       widget.photoFile
     ];
 
-    int currentIndex = 0;
+    // int currentIndex = 0;
     // print(bankChequeFile.toString());
 
     return Scaffold(
@@ -56,7 +57,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
         height: double.maxFinite,
         width: double.maxFinite,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -64,38 +65,65 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                 height: 30,
               ),
               // below container will be scrollable left to right
-              SizedBox(
-                height: 200,
-                width: double.infinity,
-                child: PageView.builder(onPageChanged: (index) {
-                  setState(() {
-                    ViewRiderScreen.currentIndexValue.value =
-                        index % images.length;
-                  });
-                }, itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SizedBox(
-                      height: 200,
-                      width: double.infinity,
-                      child: Image.network(
-                        images[index % images.length],
-                        fit: BoxFit.cover,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      pageController.jumpToPage(
+                          ViewRiderScreen.currentIndexValue.value - 1);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
                     ),
-                  );
-                }),
+                  ),
+                  SizedBox(
+                    height: 200,
+                    width: 270,
+                    child: PageView.builder(
+                        controller: pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            ViewRiderScreen.currentIndexValue.value =
+                                index % images.length;
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: SizedBox(
+                              height: 200,
+                              width: 250,
+                              child: Image.network(
+                                images[index % images.length],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      pageController.jumpToPage(
+                          ViewRiderScreen.currentIndexValue.value + 1);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_forward,
+                    ),
+                  ),
+                ],
               ),
+
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                child: Center(
-                    child: buildIndicator(
-                        ViewRiderScreen.currentIndexValue.value)),
-              ),
+              Center(
+                  child:
+                      buildIndicator(ViewRiderScreen.currentIndexValue.value)),
+
               const SizedBox(
-                height: 60,
+                height: 20,
               ),
               Column(
                 children: [

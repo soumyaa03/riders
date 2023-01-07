@@ -5,18 +5,22 @@ class TextFieldWidget extends StatelessWidget {
   final String hintText;
   final double? borderRadius;
   final int? maxLines;
+  final int? keyBoardType;
 
-  const TextFieldWidget({
-    Key? key,
-    required this.textController,
-    required this.hintText,
-    this.borderRadius = 30,
-    this.maxLines = 1,
-  }) : super(key: key);
+  const TextFieldWidget(
+      {Key? key,
+      required this.textController,
+      required this.hintText,
+      this.borderRadius = 30,
+      this.maxLines = 1,
+      this.keyBoardType = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType:
+          keyBoardType == 1 ? TextInputType.number : TextInputType.multiline,
       maxLines: maxLines,
       controller: textController,
       decoration: InputDecoration(
