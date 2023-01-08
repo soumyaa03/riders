@@ -11,7 +11,7 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
   File? image;
   try {
     final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       image = File(pickedImage.path);
     }
