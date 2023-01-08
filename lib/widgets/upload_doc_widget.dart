@@ -72,21 +72,37 @@ class _UploadDocumentWidgetState extends ConsumerState<UploadDocumentWidget> {
       height: MediaQuery.of(context).size.height / 10,
       width: MediaQuery.of(context).size.width * 0.95,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.black),
+        border: Border.all(width: 1, color: Colors.grey),
         shape: BoxShape.rectangle,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: viewImage == null
-                ? const Icon(Icons.done)
-                : const Icon(
-                    Icons.done_all,
-                    color: Colors.blue,
-                  ),
-          ),
+              padding: const EdgeInsets.only(left: 8.0),
+              child: viewImage == null
+                  ? Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.blue),
+                        shape: BoxShape.rectangle,
+                      ),
+                    )
+                  : Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        border: Border.all(width: 1, color: Colors.blue),
+                        shape: BoxShape.rectangle,
+                      ),
+                      child: const Icon(
+                        Icons.done_sharp,
+                        color: Colors.black,
+                        size: 15,
+                      ),
+                    )),
           const SizedBox(width: 10),
           SizedBox(
             width: 90,
@@ -103,7 +119,7 @@ class _UploadDocumentWidgetState extends ConsumerState<UploadDocumentWidget> {
               height: MediaQuery.of(context).size.height / 20,
               width: 80,
               decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.black),
+                border: Border.all(width: 1, color: Colors.blue),
                 shape: BoxShape.rectangle,
               ),
               child: const Center(child: Text('Upload')),
@@ -123,7 +139,7 @@ class _UploadDocumentWidgetState extends ConsumerState<UploadDocumentWidget> {
               height: MediaQuery.of(context).size.height / 20,
               width: 80,
               decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.black),
+                border: Border.all(width: 1, color: Colors.blue),
                 shape: BoxShape.rectangle,
               ),
               child: const Center(child: Text('View')),

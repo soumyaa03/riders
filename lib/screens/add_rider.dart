@@ -20,6 +20,7 @@ class _AddRiderState extends ConsumerState<AddRider> {
   TextEditingController currentPincodeController = TextEditingController();
   TextEditingController banckAccountNumberController = TextEditingController();
   TextEditingController ifscController = TextEditingController();
+  List<String> addedItems = [];
 
   @override
   void dispose() {
@@ -34,17 +35,22 @@ class _AddRiderState extends ConsumerState<AddRider> {
   }
 
   @override
+  void initState() {
+    addedItems = [];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool dataValidation() {
+      if (addedItems.isEmpty) {
+        showSnackBar(context: context, content: 'Select atleast one locality');
+      }
       if (nameController.text.isEmpty) {
         showSnackBar(context: context, content: 'name field cannot be empty');
         return false;
       } else if (phoneController.text.isEmpty) {
         showSnackBar(context: context, content: 'phone field cannot be empty');
-        return false;
-      } else if (localityController.text.isEmpty) {
-        showSnackBar(
-            context: context, content: 'locality field cannot be empty');
         return false;
       } else if (currentAddressController.text.isEmpty) {
         showSnackBar(
@@ -78,6 +84,33 @@ class _AddRiderState extends ConsumerState<AddRider> {
       }
     }
 
+    List<DropdownMenuItem> dropitems = [
+      const DropdownMenuItem(
+        value: 'Delhi',
+        child: Center(
+          child: Text('Delhi'),
+        ),
+      ),
+      const DropdownMenuItem(
+        value: 'Kolkota',
+        child: Center(
+          child: Text('Kolkota'),
+        ),
+      ),
+      const DropdownMenuItem(
+        value: 'Mumbai',
+        child: Center(
+          child: Text('Mumbai'),
+        ),
+      ),
+      const DropdownMenuItem(
+        value: 'Banglore',
+        child: Center(
+          child: Text('Banglore'),
+        ),
+      ),
+    ];
+
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -98,21 +131,30 @@ class _AddRiderState extends ConsumerState<AddRider> {
                 ),
               ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     "Name",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
-                      textController: nameController, hintText: 'enter'),
+                    textController: nameController,
+                    hintText: 'Enter Name',
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     "Phone Number",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
                     textController: phoneController,
-                    hintText: 'enter',
+                    hintText: 'Enter Phone Number',
                     keyBoardType: 1,
                   ),
                   const SizedBox(height: 20),
@@ -120,24 +162,84 @@ class _AddRiderState extends ConsumerState<AddRider> {
                     "Locality",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
-                  TextFieldWidget(
-                      textController: localityController, hintText: 'enter'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: DropdownButton(
+                            isExpanded: true,
+                            hint: const Text('Select Locality'),
+                            items: dropitems,
+                            onChanged: (newValue) {
+                              addedItems.length != 3
+                                  ? setState(() {
+                                      addedItems.add(newValue);
+                                    })
+                                  : showSnackBar(
+                                      context: context,
+                                      content:
+                                          'cannot select more than three items');
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (int i = 0; i < addedItems.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                  ),
+                                  height: 60,
+                                  width: 70,
+                                  child: Center(
+                                    child: Text(
+                                      addedItems[i],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  // TextFieldWidget(
+                  //     textController: localityController, hintText: 'enter'),
                   const SizedBox(height: 20),
                   const Text(
                     "Address",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
-                      textController: currentAddressController,
-                      hintText: 'enter'),
+                    textController: currentAddressController,
+                    hintText: 'Enter Address',
+                    maxLines: 3,
+                  ),
                   const SizedBox(height: 20),
                   const Text(
                     "Pincode",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
                     textController: currentPincodeController,
-                    hintText: 'enter',
+                    hintText: 'Enter Pincode',
                     keyBoardType: 1,
                   ),
                   const SizedBox(height: 20),
@@ -145,9 +247,12 @@ class _AddRiderState extends ConsumerState<AddRider> {
                     "Account Number",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
                     textController: banckAccountNumberController,
-                    hintText: 'enter',
+                    hintText: 'Enter Account Number',
                     keyBoardType: 1,
                   ),
                   const SizedBox(height: 20),
@@ -155,9 +260,12 @@ class _AddRiderState extends ConsumerState<AddRider> {
                     "IFSC number",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFieldWidget(
                     textController: ifscController,
-                    hintText: 'enter',
+                    hintText: 'Enter IFSC Code',
                     keyBoardType: 1,
                   ),
                   const SizedBox(height: 50),
@@ -177,7 +285,8 @@ class _AddRiderState extends ConsumerState<AddRider> {
                                 currentPincodeController.text.trim(),
                             'accNumber':
                                 banckAccountNumberController.text.trim(),
-                            'ifscNumber': ifscController.text.trim()
+                            'ifscNumber': ifscController.text.trim(),
+                            'localities': addedItems,
                           },
                         );
                       }

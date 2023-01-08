@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riders/widgets/build_indicator.dart';
 
 class ViewRiderScreen extends StatefulWidget {
   static const routeName = '/view-rider-screen';
@@ -11,6 +12,7 @@ class ViewRiderScreen extends StatefulWidget {
   final String panFile;
   final String bankChequeFile;
   final String photoFile;
+  final String localities;
   const ViewRiderScreen({
     Key? key,
     required this.riderName,
@@ -22,6 +24,7 @@ class ViewRiderScreen extends StatefulWidget {
     required this.panFile,
     required this.bankChequeFile,
     required this.photoFile,
+    required this.localities,
   }) : super(key: key);
 
   static ValueNotifier<int> currentIndexValue = ValueNotifier(0);
@@ -76,6 +79,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
+                      color: Colors.blue,
                     ),
                   ),
                   SizedBox(
@@ -90,14 +94,6 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                           });
                         },
                         itemBuilder: (context, index) {
-                          // var url =
-                          //     'https://firebasestorage.googleapis.com/v0/b/riders-4f8dd.appspot.com/o/aadharDocuments%2Fphotos%2Fdata%2Fuser%2F0%2Fcom.example.riders%2Fcache%2Fimage_picker2400482709162048794.jpg?alt=media&token=49533b9e-4fe2-4a6d-bc9c-2d711d710207';
-                          // if (url == images[0]) {
-                          //   log('bank url working');
-                          // } else {
-                          //   log('not working');
-                          // }
-
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: SizedBox(
@@ -118,6 +114,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                     },
                     icon: const Icon(
                       Icons.arrow_forward,
+                      color: Colors.blue,
                     ),
                   ),
                 ],
@@ -127,11 +124,15 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                 height: 20,
               ),
               Center(
-                  child:
-                      buildIndicator(ViewRiderScreen.currentIndexValue.value)),
-
+                  child: BuildIndicator(
+                      index: ViewRiderScreen.currentIndexValue.value)),
               const SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              const Divider(
+                color: Colors.black,
+                thickness: 1,
+                height: 10,
               ),
               Column(
                 children: [
@@ -142,12 +143,15 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            'Name',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          child: SizedBox(
+                            width: 100,
+                            child: Text(
+                              'Name',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
@@ -160,7 +164,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                             widget.riderName,
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
                           ),
@@ -178,12 +182,15 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            'Phone Number',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          child: SizedBox(
+                            width: 100,
+                            child: Text(
+                              'Phone Number',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
@@ -196,7 +203,7 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                             widget.phoneNumber,
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
                           ),
@@ -214,12 +221,15 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            'Locality',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          child: SizedBox(
+                            width: 100,
+                            child: Text(
+                              'Localities',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
@@ -229,10 +239,10 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
-                            widget.locality,
+                            widget.localities,
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w400,
                               color: Colors.black,
                             ),
                           ),
@@ -250,24 +260,30 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            'Address',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          child: SizedBox(
+                            width: 100,
+                            child: Text(
+                              'Address',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(
                           width: 25,
                         ),
-                        Text(
-                          widget.address,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            widget.address,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ],
@@ -284,32 +300,5 @@ class _ViewRiderScreenState extends State<ViewRiderScreen> {
         ),
       ),
     );
-  }
-
-  Widget buildIndicator(int index) {
-    return index == 0
-        ? const Text(
-            'Aadhar',
-            style: TextStyle(color: Colors.black),
-          )
-        : index == 1
-            ? const Text(
-                'DL',
-                style: TextStyle(color: Colors.black),
-              )
-            : index == 2
-                ? const Text(
-                    'PAN',
-                    style: TextStyle(color: Colors.black),
-                  )
-                : index == 3
-                    ? const Text(
-                        'Bank Cheque',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    : const Text(
-                        'Photo',
-                        style: TextStyle(color: Colors.black),
-                      );
   }
 }

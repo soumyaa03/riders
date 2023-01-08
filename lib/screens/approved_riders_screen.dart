@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riders/features/post_riders/post_rider_controller.dart';
 import 'package:riders/models/rider_model.dart';
-import 'package:riders/screens/add_rider.dart';
 import 'package:riders/widgets/rider_widget.dart';
 
 class ApprovedRiderScreen extends ConsumerWidget {
@@ -18,6 +17,9 @@ class ApprovedRiderScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 30,
+            ),
             Expanded(
               child: StreamBuilder<List<RiderModel>>(
                 stream: ref
@@ -44,12 +46,6 @@ class ApprovedRiderScreen extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AddRider.routeName);
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }

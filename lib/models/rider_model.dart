@@ -1,8 +1,9 @@
 class RiderModel {
   final String riderName;
   final String uid;
-  final String phoneNumber;
   final String localities;
+  final String phoneNumber;
+  final String locality;
   final String currentAddress;
   final String pincode;
   final String bankAccountNumber;
@@ -16,8 +17,9 @@ class RiderModel {
   RiderModel({
     required this.riderName,
     required this.uid,
-    required this.phoneNumber,
     required this.localities,
+    required this.phoneNumber,
+    required this.locality,
     required this.currentAddress,
     required this.pincode,
     required this.bankAccountNumber,
@@ -34,7 +36,7 @@ class RiderModel {
       'name': riderName,
       'uid': uid,
       'phoneNumber': phoneNumber,
-      'locality': localities,
+      'locality': locality,
       'currentAddress': currentAddress,
       'pincode': pincode,
       'bankAccountNumber': bankAccountNumber,
@@ -44,6 +46,7 @@ class RiderModel {
       'aadharUrl': aadharUrl,
       'bankChequeUrl': bankChequeUrl,
       'panUrl': panUrl,
+      'localities': localities
     };
   }
 
@@ -51,8 +54,9 @@ class RiderModel {
     return RiderModel(
       riderName: map['name'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
+      localities: map['localities'] ?? '',
       uid: map['uid'] ?? '',
-      localities: map['locality'] ?? '',
+      locality: map['locality'] ?? '',
       currentAddress: map['currentAddress'] ?? '',
       pincode: map['pincode'] ?? '',
       bankAccountNumber: map['bankAccountNumber'] ?? '',

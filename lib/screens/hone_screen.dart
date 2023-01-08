@@ -22,7 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, initialIndex: 1, vsync: this)
+    _tabController = TabController(length: 2, initialIndex: 0, vsync: this)
       ..addListener(() {
         setState(() {});
       });
@@ -42,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           backgroundColor: Colors.grey,
           bottom: TabBar(
               controller: _tabController,
-              indicatorColor: Colors.blue,
+              indicatorColor: Colors.black,
               tabs: topTabs),
         ),
         body: TabBarView(controller: _tabController, children: const [

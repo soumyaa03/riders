@@ -18,16 +18,18 @@ class UploadDoc extends ConsumerStatefulWidget {
   final String currentPincode;
   final String accNumber;
   final String ifscNumber;
-  const UploadDoc({
-    Key? key,
-    required this.riderName,
-    required this.phoneNumber,
-    required this.locality,
-    required this.currentAddress,
-    required this.currentPincode,
-    required this.accNumber,
-    required this.ifscNumber,
-  }) : super(key: key);
+  final List<String> localities;
+  const UploadDoc(
+      {Key? key,
+      required this.riderName,
+      required this.phoneNumber,
+      required this.locality,
+      required this.currentAddress,
+      required this.currentPincode,
+      required this.accNumber,
+      required this.ifscNumber,
+      required this.localities})
+      : super(key: key);
 
   @override
   ConsumerState<UploadDoc> createState() => _UploadDocState();
@@ -43,6 +45,7 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
     String currentPincode = widget.currentPincode;
     String accNumber = widget.accNumber;
     String ifscNumber = widget.ifscNumber;
+    List<String> localities = widget.localities;
     if (aadhar != null) {
       log(aadhar.path.toString());
     }
@@ -68,6 +71,7 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
           currentPincode,
           accNumber,
           ifscNumber,
+          localities,
           aadhar,
           dl,
           pan,
@@ -170,6 +174,8 @@ class _UploadDocState extends ConsumerState<UploadDoc> {
 
                   if (dataValidation(aadhar, pan, dl, bankCheque, photo)) {
                     await storeUserData(aadhar, pan, dl, bankCheque, photo);
+                    showSnackBar(
+                        context: context, content: 'Loading new Rider');
                     Navigator.pushNamed(context, HomeScreen.routeName);
                   }
                 },

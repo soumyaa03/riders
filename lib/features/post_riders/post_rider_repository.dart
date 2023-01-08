@@ -24,6 +24,7 @@ class PostRiderRepository {
     required String currentPincode,
     required String accNumber,
     required String ifscNumber,
+    required List<String> localities,
     required ProviderRef ref,
     required BuildContext context,
     required File? aadhar,
@@ -34,22 +35,6 @@ class PostRiderRepository {
     required bool isApproved,
   }) async {
     try {
-      // String uid = riderName;
-      // if (aadhar != null) {
-      //   log(aadhar.path.toString());
-      // }
-      // if (pan != null) {
-      //   log(pan.path.toString());
-      // }
-      // if (dl != null) {
-      //   log(dl.path.toString());
-      // }
-      // if (bankCheque != null) {
-      //   log(bankCheque.path.toString());
-      // }
-      // if (photo != null) {
-      //   log(photo.path.toString());
-      // }
       String photoUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFireBase(
@@ -73,12 +58,15 @@ class PostRiderRepository {
       DocumentReference docRef =
           FirebaseFirestore.instance.collection('UnapprovedRiders').doc();
       String uid = docRef.id;
-
+      String localitiesString = localities.join(",");
+      log(localitiesString);
+      log('check');
       var rider = RiderModel(
         riderName: riderName,
         uid: uid,
+        localities: localitiesString,
         phoneNumber: phoneNumber,
-        localities: locality,
+        locality: locality,
         currentAddress: currentAddress,
         pincode: currentPincode,
         bankAccountNumber: accNumber,
@@ -117,8 +105,9 @@ class PostRiderRepository {
         riders.add(RiderModel(
             riderName: riderData.riderName,
             uid: riderData.uid,
-            phoneNumber: riderData.phoneNumber,
             localities: riderData.localities,
+            phoneNumber: riderData.phoneNumber,
+            locality: riderData.locality,
             currentAddress: riderData.currentAddress,
             pincode: riderData.pincode,
             bankAccountNumber: riderData.bankAccountNumber,
@@ -145,8 +134,9 @@ class PostRiderRepository {
         riders.add(RiderModel(
             riderName: riderData.riderName,
             uid: riderData.uid,
-            phoneNumber: riderData.phoneNumber,
             localities: riderData.localities,
+            phoneNumber: riderData.phoneNumber,
+            locality: riderData.locality,
             currentAddress: riderData.currentAddress,
             pincode: riderData.pincode,
             bankAccountNumber: riderData.bankAccountNumber,

@@ -18,6 +18,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final currentPincode = arguments['currentPincode'];
       final currentAddress = arguments['currentAddress'];
       final accNumber = arguments['accNumber'];
+      final List<String> localities = arguments['localities'];
       return MaterialPageRoute(
           builder: (((context) => UploadDoc(
                 accNumber: accNumber,
@@ -27,6 +28,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 locality: locality,
                 phoneNumber: phoneNumber,
                 riderName: riderName,
+                localities: localities,
               ))));
 
     case HomeScreen.routeName:
@@ -51,8 +53,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final panFile = arguments['panFile'];
       final bankChequeFile = arguments['bankChequeFile'];
       final photoFile = arguments['photoFile'];
+      final localities = arguments['localities'];
       return MaterialPageRoute(
           builder: (context) => ViewRiderScreen(
+                localities: localities,
                 address: address,
                 locality: locality,
                 phoneNumber: phoneNumber,

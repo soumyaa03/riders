@@ -29,11 +29,10 @@ class TextFieldWidget extends StatelessWidget {
           hintText: hintText,
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius!),
-              borderSide:
-                  const BorderSide(color: Colors.yellowAccent, width: 1)),
+              borderSide: const BorderSide(color: Colors.blueGrey, width: 1)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius!),
-              borderSide: const BorderSide(color: Colors.white, width: 1))),
+              borderSide: const BorderSide(color: Colors.blue, width: 1))),
     );
   }
 }
